@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- Single-file mobile preview v2: embeds ALL local assets (including JS data gallery images) -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>더원로지스 | THE ONE Total Solution</title>
+<meta content="더원로지스(업로드 자료) 정보를 적용한 단일 index.html 입니다." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --navy:#004494;
+      --sky:#00aeef;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --bg:#f3f4f6;
+      --white:#ffffff;
+      --radius:18px;
+      --shadow:0 14px 34px rgba(17,24,39,.10);
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:"Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text); background:var(--white); overflow-x:hidden}
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(255,255,255,.92); backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(229,231,235,.9);
+    }
+    .nav{height:70px; display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .brand{display:flex; align-items:center; gap:12px; min-width:260px; cursor:pointer}
+     .logo-box{
+  background:none;
+  padding:0;
+  border-radius:0;
+  box-shadow:none;
+}
+    .logo-box img{width:100%; height:100%; object-fit:contain}
+    .brand-name{font-family:Montserrat, sans-serif; font-weight:800; font-size:22px; color:var(--navy); letter-spacing:-.3px; line-height:1.05}
+    .brand-name small{display:block; font-family:"Noto Sans KR"; font-weight:700; font-size:12px; color:var(--muted); margin-top:4px}
+
+    nav.menu{display:flex; gap:6px; flex-wrap:wrap; justify-content:center}
+    nav.menu button{
+      border:1px solid transparent; background:transparent; cursor:pointer;
+      padding:10px 12px; border-radius:14px; font-weight:800; color:#374151;
+      white-space:nowrap;
+    }
+    nav.menu button:hover{background:rgba(0,174,239,.10)}
+    nav.menu button.active{background:rgba(0,68,148,.08); border-color:rgba(0,68,148,.14); color:var(--navy)}
+
+    .cta{display:flex; gap:10px; min-width:220px; justify-content:flex-end}
+    .btn{border:1px solid var(--line); background:#fff; padding:10px 14px; border-radius:14px; font-weight:900; cursor:pointer}
+    .btn.primary{border:none; background:linear-gradient(135deg, var(--sky), var(--navy)); color:#fff}
+
+    .hamb{display:none; border:1px solid var(--line); background:#fff; border-radius:14px; padding:10px 12px; cursor:pointer; font-weight:900;}
+    .drawer{display:none; border-top:1px solid var(--line); background:#fff; padding:8px}
+    .drawer button{width:100%; text-align:left; padding:12px 12px; border-radius:14px; border:1px solid transparent; background:#fff; font-weight:900; cursor:pointer}
+    .drawer button:hover{background:rgba(0,174,239,.10)}
+    .drawer.show{display:block}
+
+    .page{display:none; padding:26px 0 72px}
+    .page.active{display:block}
+
+    .hero{
+      min-height: 72vh;
+      border-radius: 0 0 26px 26px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(0,68,148,.72), rgba(0,68,148,.22)),
+        url('assets/img_001.webp');
+      background-size:cover; background-position:center;
+      color:#fff; display:grid;
+    }
+    .hero .wrap{padding-top:64px; padding-bottom:64px; display:grid; gap:18px; align-content:center}
+    .badge{display:inline-flex; align-items:center; gap:8px; width:max-content; padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); font-weight:900}
+    h1{margin:0; font-size:clamp(28px, 5vw, 48px); line-height:1.15; letter-spacing:-.4px}
+    .lead{margin:0; max-width:820px; color:rgba(255,255,255,.90); font-size:clamp(14px, 2.2vw, 18px); line-height:1.7}
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px}
+    .hero .btn{border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff}
+    .hero .btn.primary{background:#fff; color:var(--navy)}
+    /* ===== HERO 2×2 Premium Glass ===== */
+.stats{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:22px;
+  max-width:880px;
+  margin-left:auto;
+  margin-right:auto;
+}
+    .stat{
+  position:relative;
+  padding:20px 22px;
+  border-radius:22px;
+
+  background:rgba(255,255,255,.20);
+  border:1px solid rgba(255,255,255,.45);
+
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+
+  min-height:130px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  transition:all .35s ease;
+}
+
+.stat:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.stat::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,0.5),
+    rgba(255,255,255,0.15) 45%,
+    rgba(255,255,255,0) 75%
+  );
+  pointer-events:none;
+}
+    .stat b{font-size:20px} .stat span{display:block; margin-top:4px; color:rgba(255,255,255,.82); font-weight:700}
+
+    section{padding:56px 0}
+    .title{display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:16px}
+    .title h2{margin:0; font-size:28px; letter-spacing:-.3px; color:var(--navy)}
+    .title p{margin:0; color:var(--muted); max-width:620px}
+    .grid{
+  display:grid;
+  gap:20px;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+}
+    .card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:0 1px 0 rgba(16,24,40,.02); transition:.18s ease}
+    .card:hover{box-shadow:var(--shadow); transform:translateY(-2px)}
+    .icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:-0.2px;
+  color:#0b2a4a;
+  background:rgba(30,90,158,.10);
+  border:1px solid rgba(30,90,158,.25);
+  margin-bottom:10px;
+}
+    .muted{color:var(--muted)}
+    .panel{border:1px solid var(--line); border-radius:var(--radius); background:var(--bg); overflow:hidden; box-shadow:0 1px 0 rgba(16,24,40,.02)}
+    .panel.white{background:#fff}
+    .pad{padding:18px}
+    .two{display:grid; gap:16px; grid-template-columns:1.2fr .8fr}
+
+    .timeline-item{display:grid; grid-template-columns:90px 1fr; gap:14px; padding:14px 0; border-bottom:1px dashed rgba(229,231,235,.95)}
+    .timeline-item:last-child{border-bottom:none}
+    .year{font-weight:900; color:var(--navy)}
+    .desc h4{margin:0 0 6px 0}
+    .desc p{margin:0; color:var(--muted)}
+
+    table.info{width:100%; border-collapse:collapse; margin-top:10px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+    table.info th, table.info td{padding:12px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:14px}
+    table.info th{width:120px; background:rgba(0,68,148,.05); color:#1f2937; font-weight:900}
+    table.info tr:last-child th, table.info tr:last-child td{border-bottom:none}
+
+    .contact{display:grid; gap:16px; grid-template-columns:1fr 1fr}
+    iframe.map{width:100%; height:360px; border:0; border-radius:var(--radius); background:#e9eef6}
+
+    footer{background:var(--navy); color:rgba(255,255,255,.86); padding:24px 0}
+    footer a{color:#fff; font-weight:900}
+
+    @media (max-width:980px){
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .two{grid-template-columns:1fr}
+      .contact{grid-template-columns:1fr}
+      .stats{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  max-width:520px;
+}
+
+      nav.menu, .cta{display:none}
+      .hamb{display:inline-flex}
+    }
+    @media (max-width:520px){ .grid{grid-template-columns:1fr
+  .stats{ grid-template-columns:1fr; }
+} }
+  /* Header back button */
+.back-nav{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.back-nav.hidden{display:none}
+  
+
+/* ===== Premium Tone (2026) ===== */
+:root{
+  --brand-navy:#0b2a4a;
+  --brand-blue:#1e5a9e;
+  --brand-sky:#4a90d9;
+  --ink:#0f172a;
+  --muted:#475569;
+  --card:#ffffff;
+  --line:rgba(15,23,42,.10);
+  --shadow:0 18px 60px rgba(2,8,23,.18);
+  --radius-xl:20px;
+}
+body{ color:var(--ink); letter-spacing:-0.2px; }
+.section-title, h2{ letter-spacing:-0.6px; }
+.card, .core-card, .service-card{
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  box-shadow:0 10px 30px rgba(2,8,23,.06);
+}
+button, .btn{ border-radius:14px; }
+
+/* ===== Core Gallery Modal ===== */
+.core-modal-backdrop{
+  position:fixed; inset:0;
+  background:rgba(2,8,23,.72);
+  backdrop-filter: blur(8px);
+  display:none; align-items:center; justify-content:center;
+  z-index:9999;
+}
+.core-modal{
+  width:min(1080px, calc(100vw - 32px));
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:24px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.core-modal-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px;
+  background:linear-gradient(180deg, rgba(15,23,42,.92), rgba(15,23,42,.72));
+  color:#fff;
+}
+.core-modal-title{ display:flex; flex-direction:column; gap:2px; }
+.core-modal-title b{ font-size:14px; letter-spacing:-.2px; }
+.core-modal-title span{ font-size:12px; opacity:.85; }
+.core-modal-actions{ display:flex; gap:8px; align-items:center; }
+.core-icon-btn{
+  width:34px; height:34px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.12);
+  color:#fff; cursor:pointer;
+  display:grid; place-items:center;
+}
+.core-icon-btn:hover{ background:rgba(255,255,255,.18); }
+
+.core-stage{ position:relative; background:#0b1220; }
+.core-stage img{
+  width:100%; height:auto; display:block;
+  aspect-ratio: 16/9;
+  object-fit:cover;
+}
+.core-caption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:18px 18px 16px;
+  color:#fff;
+  background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.72));
+}
+.core-caption .cap-title{ font-size:18px; font-weight:700; letter-spacing:-.3px; }
+.core-caption .cap-sub{ margin-top:6px; font-size:13px; opacity:.9; line-height:1.45; max-width: 860px; }
+
+.core-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:46px; height:46px; border-radius:16px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(2,8,23,.35);
+  color:#fff; cursor:pointer;
+  display:grid; place-items:center;
+}
+.core-nav:hover{ background:rgba(2,8,23,.55); }
+.core-nav.prev{ left:14px; }
+.core-nav.next{ right:14px; }
+
+.core-footer{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px;
+  background:rgba(255,255,255,.92);
+}
+.core-dots{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.core-dot{
+  width:10px; height:10px; border-radius:999px;
+  border:1px solid rgba(2,8,23,.25);
+  background:rgba(2,8,23,.12);
+  cursor:pointer;
+}
+.core-dot.active{
+  background:rgba(30,90,158,.95);
+  border-color:rgba(30,90,158,.95);
+}
+.core-footer .hint{ font-size:12px; color:rgba(15,23,42,.65); }
+
+@media (max-width:720px){
+  .core-caption{ padding:14px 14px 12px; }
+  .core-nav{ width:42px; height:42px; }
+  .core-modal-title b{ font-size:13px; }
+}
+
+
+
+/* ===== Core card "이미지 보기" 버튼 ===== */
+.core-view-btn{
+  margin-top:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(30,90,158,.18);
+  background:rgba(30,90,158,.08);
+  color:#0b2a4a;
+  font-weight:900;
+  font-size:13px;
+  cursor:pointer;
+}
+.core-view-btn:hover{
+  background:rgba(30,90,158,.12);
+  border-color:rgba(30,90,158,.25);
+}
+.core-view-btn .ico{ width:18px; height:18px; display:inline-block; }
+.core-view-btn-wrap{ display:flex; justify-content:flex-end; }
+
+
+/* ===== Affiliates Gallery (계열사 이미지) ===== */
+.aff-gallery{
+  margin:14px 0 10px;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(2,8,23,.10);
+  background:linear-gradient(135deg, rgba(30,90,158,.10), rgba(0,174,239,.08));
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:0;
+}
+.aff-gallery img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  display:block;
+  border-right:1px solid rgba(255,255,255,.35);
+  border-bottom:1px solid rgba(255,255,255,.35);
+}
+.aff-gallery img:nth-child(2n){
+  border-right:0;
+}
+.aff-gallery img:nth-last-child(-n+2){
+  border-bottom:0;
+}
+@media (max-width:720px){
+  .aff-gallery img{ height:120px; }
+}
+.aff-gallery.placeholder{
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.aff-ph{
+  width:100%;
+  text-align:center;
+  color:rgba(17,24,39,.55);
+  font-weight:800;
+  letter-spacing:-.2px;
+  padding:22px 14px;
+  border-radius:14px;
+  border:1px dashed rgba(17,24,39,.18);
+  background:rgba(255,255,255,.45);
+}
+.aff-gallery.broken.placeholder .aff-ph{ display:block; }
+
+/* ===== Affiliates Gallery fix: 1장일 때 크게(풀폭) ===== */
+.aff-gallery img:only-child{
+  grid-column:1 / -1;
+  height:260px;
+  object-fit:cover;
+  border-right:0;
+  border-bottom:0;
+}
+.aff-gallery img:last-child:nth-child(odd){
+  grid-column:1 / -1;
+  height:220px;
+}
+@media (max-width:720px){
+  .aff-gallery img:only-child{ height:200px; }
+}
+
+
+/* ===== Image stability ===== */
+img{ max-width:100%; height:auto; display:block; }
+.logo-box img{ object-fit:contain; }
+
+
+/* ===== Mobile menu UX ===== */
+.drawer button{ padding:14px 14px; font-size:15px; }
+.hamb{ padding:12px 14px; }
+
+
+/* ===== Greeting Logo Fix ===== */
+.greeting-image{
+  height:100%;
+  min-height:340px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px 18px;
+}
+.ceo-logo-img{
+  max-width:90%;
+  max-height:300px;
+  object-fit:contain;
+  display:block;
+}
+
+
+/* ===== Logo Optimized ===== */
+.site-logo{
+  max-height:68px;
+  width:auto;
+  display:block;
+  object-fit:contain;
+}
+@media (max-width:768px){
+  .site-logo{
+    max-height:52px;
+
+    /* Mobile hero: avoid vertical centering that can cause top text clipping */
+    .hero{ min-height: auto; }
+    .hero .wrap{
+      padding-top: 24px !important;
+      padding-bottom: 36px !important;
+      align-content: start !important;
+    }
+    .badge{ max-width: 100%; overflow:hidden; text-overflow:ellipsis; }
+
+}
+}
+
+
+/* ===== Premium Header Scroll Effect ===== */
+header{
+  transition:all .35s ease;
+}
+header.scrolled{
+  padding:6px 0;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+header.scrolled .site-logo{
+  max-height:54px;
+}
+
+
+/* ===== Hero Animation ===== */
+.hero h1,
+.hero .stats{
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUp 1s ease forwards;
+}
+.hero .stats{
+  animation-delay:.4s;
+}
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+/* ===== Card Elevation Upgrade ===== */
+.panel,
+.stat{
+  transition:all .3s ease;
+}
+.panel:hover,
+.stat:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+
+
+
+/* ===== Mobile Hero: Fit in One Screen ===== */
+@media (max-width: 768px){
+  /* Use small-viewport units to avoid browser UI cutting space */
+  .hero{
+    min-height: 100svh !important;
+    padding: 64px 16px 22px !important;
+  }
+
+  /* Stack content more tightly */
+  .hero .wrap{
+    grid-template-columns: 1fr !important;
+    align-content: start !important;
+    row-gap: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Keep the badge from forcing extra height */
+  .badge{
+    max-width: 100%;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hero h1{
+    font-size: clamp(24px, 6.4vw, 30px) !important;
+    line-height: 1.18 !important;
+    margin: 6px 0 8px !important;
+  }
+
+  .hero p{
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    margin: 0 0 12px !important;
+  }
+
+  /* Button a bit smaller */
+  .hero .btn,
+  .hero a.btn,
+  .hero button.btn{
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+
+  /* 2x2 cards smaller so they fit */
+  .stats{
+    margin-top: 14px !important;
+    gap: 12px !important;
+  }
+
+  .stat{
+    padding: 14px 14px !important;
+    border-radius: 16px !important;
+    min-height: 92px !important;
+  }
+
+  .stat h3{
+    font-size: 18px !important;
+    margin: 0 0 6px !important;
+  }
+
+  .stat p{
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+/* ===== Image Viewer / Modal: make it big on mobile ===== */
+/* Covers common classnames used in this project */
+.modal, .lightbox, .viewer, .gallery-modal, .img-modal, .popup{
+  z-index: 9999;
+}
+
+/* If the modal content is wrapped */
+.modal .content, .lightbox .content, .viewer .content,
+.gallery-modal .content, .img-modal .content, .popup .content{
+  width: min(96vw, 980px) !important;
+  max-width: 96vw !important;
+  max-height: 90vh !important;
+}
+
+/* The image itself */
+.modal img, .lightbox img, .viewer img,
+.gallery-modal img, .img-modal img, .popup img{
+  width: auto !important;
+  height: auto !important;
+  max-width: 96vw !important;
+  max-height: 78vh !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+/* If there is an inner frame/card that limits size */
+.modal .panel, .lightbox .panel, .viewer .panel,
+.gallery-modal .panel, .img-modal .panel, .popup .panel{
+  width: min(96vw, 980px) !important;
+  max-width: 96vw !important;
+}
+
+
+/* ===== Mobile Hero: EXTRA Compact (show 4 cards in one view) ===== */
+@media (max-width: 768px){
+  /* Header smaller */
+  header{
+    padding: 8px 0 !important;
+  }
+  .site-logo{ max-height: 44px !important; }
+  .brand .name, .brand strong{ font-size: 18px !important; }
+  .brand .tagline{ font-size: 11px !important; }
+
+  /* Hero height based on viewport minus header */
+  .hero{
+    min-height: calc(100svh - 84px) !important; /* 84px ~ compact header */
+    padding: 16px 16px 18px !important;
+  }
+  .hero .wrap{
+    padding-top: 10px !important;
+    row-gap: 12px !important;
+  }
+
+  /* Make badge optional (hide to save space) */
+  .badge{ display:none !important; }
+
+  .hero h1{
+    font-size: 24px !important;
+    line-height: 1.16 !important;
+    letter-spacing: -0.3px;
+    margin: 0 0 8px !important;
+  }
+
+  .hero p{
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    margin: 0 0 10px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hero .btn, .hero a.btn, .hero button.btn{
+    padding: 9px 12px !important;
+    font-size: 12.5px !important;
+    border-radius: 999px !important;
+  }
+
+  /* 2x2 cards: smaller */
+  .stats{
+    margin-top: 12px !important;
+    gap: 10px !important;
+  }
+  .stat{
+    padding: 12px 12px !important;
+    border-radius: 14px !important;
+    min-height: 78px !important;
+  }
+  .stat h3{
+    font-size: 16px !important;
+    margin: 0 0 4px !important;
+  }
+  .stat p{
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+  }
+}
+
+</style>
+<style>
+/* LOGO FIX */
+.logo-box img{
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    max-height:60px !important;
+}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d3b66">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="THE ONE">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+</head>
+<body>
+<header>
+<div class="wrap nav">
+<button aria-label="뒤로가기" class="back-nav hidden" id="backNav" onclick="goBack()">← 뒤로가기</button>
+<div class="brand" onclick="go('home')">
+<div class="logo-box">
+<img alt="더원로지스 로고" src="assets/img_002.webp"/ class="site-logo">
+</div>
+<div class="brand-name">
+        THE ONE
+        <small>컨테이너제조/보세/위험물 · SCM · 건설</small>
+</div>
+</div>
+<nav aria-label="메뉴" class="menu">
+<button class="tab active" data-page="home" onclick="go('home')">HOME</button>
+<button class="tab" data-page="company" onclick="go('company')">회사소개</button>
+<button class="tab" data-page="affiliates" onclick="go('affiliates')">계열사</button>
+<button class="tab" data-page="location" onclick="go('location')">오시는 길</button>
+</nav>
+</div>
+<button aria-label="메뉴" class="hamb" id="hamb">☰</button>
+<div class="drawer" id="drawer">
+<button onclick="go('home')">HOME</button>
+<button onclick="goCompanyToHistory()">회사소개</button>
+<button onclick="go('company'); jumpToServices()">서비스</button>
+<button onclick="go('company'); jumpToGreeting()">인사말</button>
+<button onclick="go('affiliates')">계열사</button>
+<button onclick="go('location')">오시는 길</button>
+</div>
+</header>
+<main>
+<div class="page active" id="page-home">
+<section class="hero">
+<div class="wrap">
+<div class="badge">COMPREHENSIVE LOGISTICS · BONDED · MANUFACTURING · Construction</div>
+<h1>현장 실행력으로<br/>고객의 시간을 가치있게</h1>
+<p class="lead">건설·제조·물류 분야의 원스톱 솔루션을 제공하는<br/>대한민국 No.1 종합 솔루션 기업 더원입니다.</p>
+<div class="hero-actions">
+<button class="btn primary" onclick="go('location')">견적/상담 요청</button>
+</div>
+<div class="stats">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="stat"><b>Bonded</b><span>보세장치장/위험물창고</span></div>
+<div class="stat"><b>ESS</b><span>특수 컨테이너 제조</span></div>
+<div class="stat"><b>SCM</b><span>물류센터 위탁운영, 지게차 대여</span></div>
+<div class="stat"><b>General Construction</b><span>종합적인 계획, 관리 및 조정에 따라 건설, 시공</span></div>
+</div>
+</div></section>
+<section>
+<div class="wrap">
+<div class="title">
+<div>
+<h2>핵심 역량</h2>
+<p>건설·제조·물류 - 원스톱 솔루션을 제공하는 대한민국 No.1 종합 솔루션 기업 더원입니다.</p>
+</div>
+</div>
+<div class="grid">
+
+
+
+
+
+<div class="card"><div class="icon">MFG</div><h3>제조(ESS 컨테이너)</h3><p class="muted">ESS 특수 컨테이너 제조 역량 및<br/> 품질/안전 프로세스 강화</p><div class="core-view-btn-wrap"><button class="core-view-btn" data-core-key="ESS_MFG" type="button">
+<svg aria-hidden="true" class="ico" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 7.5C4 6.12 5.12 5 6.5 5h11C18.88 5 20 6.12 20 7.5v9C20 17.88 18.88 19 17.5 19h-11C5.12 19 4 17.88 4 16.5v-9Z" stroke="currentColor" stroke-width="1.7"></path>
+<path d="M7 15l2.6-2.9c.3-.34.82-.36 1.15-.04l1.65 1.55c.3.28.76.28 1.06 0L17 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+<path d="M9 9.3a1.1 1.1 0 1 0 0 .01z" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+</svg>
+이미지 보기</button></div></div>
+
+<div class="card"><div class="icon">BND</div><h3>보세/위험물</h3><p class="muted">보세화물·위험물 창고 운영을 통한<br/> 안정적 물류 관리</p><div class="core-view-btn-wrap"><button class="core-view-btn" data-core-key="BND" type="button">
+<svg aria-hidden="true" class="ico" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 7.5C4 6.12 5.12 5 6.5 5h11C18.88 5 20 6.12 20 7.5v9C20 17.88 18.88 19 17.5 19h-11C5.12 19 4 17.88 4 16.5v-9Z" stroke="currentColor" stroke-width="1.7"></path>
+<path d="M7 15l2.6-2.9c.3-.34.82-.36 1.15-.04l1.65 1.55c.3.28.76.28 1.06 0L17 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+<path d="M9 9.3a1.1 1.1 0 1 0 0 .01z" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+</svg>
+이미지 보기</button></div></div>
+
+<div class="card"><div class="icon">SEA</div><h3>해상·내륙 연계</h3><p class="muted">광양항 배후단지 거점 기반 운영 및<br/>내륙 운송 연계</p><div class="core-view-btn-wrap"><button class="core-view-btn" data-core-key="SEA" type="button">
+<svg aria-hidden="true" class="ico" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 7.5C4 6.12 5.12 5 6.5 5h11C18.88 5 20 6.12 20 7.5v9C20 17.88 18.88 19 17.5 19h-11C5.12 19 4 17.88 4 16.5v-9Z" stroke="currentColor" stroke-width="1.7"></path>
+<path d="M7 15l2.6-2.9c.3-.34.82-.36 1.15-.04l1.65 1.55c.3.28.76.28 1.06 0L17 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+<path d="M9 9.3a1.1 1.1 0 1 0 0 .01z" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+</svg>
+이미지 보기</button></div></div>
+
+<div class="card"><div class="icon">GC</div><h3>종합건설</h3><p class="muted">산업시설·물류센터·구조물 시공 등 종합건설 역량을 제공합니다.</p><div class="core-view-btn-wrap"><button class="core-view-btn" data-core-key="GC" type="button">
+<svg aria-hidden="true" class="ico" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 7.5C4 6.12 5.12 5 6.5 5h11C18.88 5 20 6.12 20 7.5v9C20 17.88 18.88 19 17.5 19h-11C5.12 19 4 17.88 4 16.5v-9Z" stroke="currentColor" stroke-width="1.7"></path>
+<path d="M7 15l2.6-2.9c.3-.34.82-.36 1.15-.04l1.65 1.55c.3.28.76.28 1.06 0L17 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+<path d="M9 9.3a1.1 1.1 0 1 0 0 .01z" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+</svg>
+이미지 보기</button></div></div>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-company">
+<!-- 회사소개 + 서비스 (한 화면) -->
+<section>
+<div class="wrap">
+<div class="title">
+<div>
+<h2>"더원"은 건설·제조·물류 모든 분야의 원스톱 솔루션을 제공합니다</h2>
+</div>
+</div>
+<div class="panel white">
+<div class="pad">
+<p style="margin:0; line-height:1.8;">
+              물류·제조·건설 분야의 원스톱 솔루션을 제공하는 대한민국 No.1 종합 솔루션 기업 더원입니다.
+            </p>
+<div style="height:12px"></div>
+<p class="muted" style="margin:0; line-height:1.8;">
+              광주광역시 평동산단, 광양항 배휴부지, 율촌산단의 당사 인프라를 기반으로 보세화물, SCM, ESS 특수 컨테이너 제조,
+              그리고 종합 건설 시공 능력을 유기적으로 결합하여 고객에게 원스톱 솔루션을 제공합니다.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<section id="services-anchor" style="background:var(--bg);">
+<div class="wrap">
+<div class="title">
+<div>
+<h2>서비스</h2>
+<p>운송·SCM·제조/보세/위험물·건설까지, 현장 실행 중심으로 제공합니다.</p>
+</div>
+</div>
+<div class="grid">
+<div class="card"><div class="icon">LAND</div><h3>육상운송</h3><p class="muted">항만–내륙 운송, 배차 운영 및 현장 반입 지원</p></div>
+<div class="card"><div class="icon">SCM</div><h3>공급망 관리</h3><p class="muted">물류의 전 과정을 하나로 잇는 첨단<br/> SCM 서비스</p></div>
+<div class="card"><div class="icon">MBH</div><h3>제조·보세·위험물</h3><p class="muted">ESS 특수 컨테이너 제조 및 보세장치장/위험물창고 운영</p></div>
+<div class="card"><div class="icon">GC</div><h3>종합건설</h3><p class="muted">산업시설·물류센터·구조물 시공 등<br/> 종합건설 역량</p></div>
+</div>
+<div style="height:14px"></div>
+<div class="panel white">
+<div class="pad">
+<h3 style="margin:0 0 10px 0; color:var(--navy);">Manufacturing · Bonded · Hazmat Warehouse</h3>
+<p class="muted" style="margin:0;">
+              ESS 특수 컨테이너 제조와 광양항 배후단지 기반의 보세장치장, 위험물창고 운영 등 전문 물류 시스템을 통해 최고의 현장 효율성을 제공합니다.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<section id="greeting-anchor">
+<div class="wrap">
+<div class="title">
+<div>
+<h2>대표이사 인사말</h2>
+</div>
+</div>
+<div class="two">
+<div class="panel white">
+<div class="pad">
+<div style="display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; border:1px solid var(--line); font-weight:900; color:var(--navy); background:rgba(0,174,239,.08);">
+                CEO Greeting
+              </div>
+<h3 style="margin:10px 0 10px 0;">현장 실행력으로 고객의 시간을 가치있게 만들겠습니다.</h3>
+<div class="muted" style="line-height:1.9"><p>
+              안녕하십니까. "더원" 대표이사 박재준 입니다.<br/>
+              더원은 물류·제조·건설 분야의 경험을 바탕으로, 고객의 문제를 현장에서 빠르게 해결하는 “실행 중심”의 파트너가 되겠습니다.
+            </p>
+<p>
+              특히 광주광역시 평동사업장, 광양항 거점으로 광양항배후단지, 율촌산업단지의 당사 인프라를 기반으로 한 물류 운영, ESS 특수 컨테이너 제조 역량, 그리고 종합 건설 시공 능력을 유기적으로 결합하여 고객에게 원스톱 솔루션을 제공하겠습니다.
+            </p>
+<p>
+              저희 더원은 안전과 품질을 최우선 가치로 삼고, 신뢰받는 기업으로 성장하겠습니다. <br/>
+              감사합니다.
+            </p></div>
+<div style="height:14px"></div>
+<div style="display:flex; align-items:flex-end; gap:10px; justify-content:flex-end; font-weight:900;">
+<span>더원</span>
+<span>대표이사</span>
+<span style="color:var(--navy);"> 박 재 준 </span>
+</div>
+</div>
+</div>
+<div class="panel">
+  <div class="greeting-image">
+    <img src="assets/img_003.webp" class="ceo-logo-img" alt="THE ONE Logo" class="site-logo">
+  </div>
+</div>
+</div>
+</div>
+</section>
+<section id="history-anchor" style="background:var(--bg);">
+<div class="wrap">
+<div class="title">
+<div>
+<h2>회사 연혁</h2>
+</div>
+</div>
+<div class="panel white">
+<div class="pad">
+<div class="timeline-item">
+<div class="year">2026</div>
+<div class="desc">
+<h4>광양항 배후단지 기반 사업 확장</h4>
+<p>ESS 특수 컨테이너 제조 역량 고도화 및 물류/보세 운영 체계 강화</p>
+</div>
+</div>
+<div class="timeline-item">
+<div class="year">2024</div>
+<div class="desc">
+<h4>생산 라인 구축 및 품질 시스템 정착</h4>
+<p>용접·도장·조립 공정 표준화, 현장 안전/품질 프로세스 강화</p>
+</div>
+</div>
+<div class="timeline-item">
+<div class="year">2022</div>
+<div class="desc">
+<h4>법인 설립 및 사업 개시</h4>
+<p>물류·제조·건설 원스톱 솔루션 기반 마련</p>
+</div>
+</div>
+<p class="muted" style="margin:12px 0 0 0; font-size:13px;">※ 연혁 내용은 원하시는 연도/내용으로 언제든지 수정 가능합니다.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-affiliates">
+<section>
+<div class="wrap">
+<div class="title">
+<div>
+<h2>계열사</h2>
+<p>업로드 자료의 계열사 데이터를 카드/정보표 형태로 반영했습니다.</p>
+</div>
+</div>
+<div class="grid">
+<div class="card" data-modal-key="LOGIS" style="cursor:pointer">
+<div class="icon">갤러리</div><div class="aff-gallery"><img alt="더원로지스 사업장 전경 1" loading="lazy" onerror="this.style.display='none'; this.closest('.aff-gallery').classList.add('broken');" src="assets/img_004.webp"/></div>
+<h3>주식회사 더원로지스</h3>
+<p class="muted">ESS 특수 컨테이너 제조와 광양항 배후단지 기반의 보세장치장, 위험물창고 운영등 전문 물류 시스템을 통해 최고의 현장 효율성을 제공합니다.</p>
+<table class="info"><tr><th>주요사업</th><td>컨테이너제조 및 보세화물, 위험물 창고</td></tr>
+<tr><th>등록번호</th><td>524-87-01831</td></tr></table>
+</div>
+<div class="card" data-modal-key="PLUS" style="cursor:pointer">
+<div class="icon">갤러리</div><div class="aff-gallery"><img alt="더원플러스 사업장 전경 1" loading="lazy" onerror="this.style.display='none'; this.closest('.aff-gallery').classList.add('broken');" src="assets/img_005.webp"/></div>
+<h3>주식회사 더원플러스</h3>
+<p class="muted">국내 주요 거점의 창고 인프라 보유 및 운영 노하우로 최고의 물류서비스를 제공하고 지게차 대여 및 위탁운영 서비스를 제공합니다.</p>
+<table class="info"><tr><th>주요사업</th><td>토탈 물류서비스, ESS CASE 제조, 건설기계대여업</td></tr>
+<tr><th>등록번호</th><td>705-88-01102</td></tr></table>
+</div>
+<div class="card" data-modal-key="CONS" style="cursor:pointer">
+<div class="icon">갤러리</div><div class="aff-gallery"><img alt="더원건설 사업장 전경 1" loading="lazy" onerror="this.style.display='none'; this.closest('.aff-gallery').classList.add('broken');" src="assets/img_006.webp"/></div>
+<h3>주식회사 더원건설</h3>
+<p class="muted">대표이사: 박재준</p>
+<table class="info">
+<tr><th>주요사업</th><td>산업시설·물류센터·구조물 시공</td></tr>
+<tr><th>사업분야</th><td>토목·건축·플랜트 종합건설</td></tr>
+<tr><th>등록번호</th><td>411-88-02040</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-location">
+<section style="background:var(--bg);">
+<div class="wrap">
+<div class="title">
+<div>
+<h2>오시는 길 · 고객문의</h2>
+<p>업로드 자료의 지도 임베드 주소를 그대로 적용했습니다.</p>
+</div>
+</div>
+<div class="contact">
+<div class="panel white pad">
+<h3 style="margin:0 0 10px 0; color:var(--navy);">본사 위치</h3>
+<p class="muted" style="margin:0 0 12px 0;">전라남도 광양시 항만2로 30</p>
+<iframe class="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84+%EA%B4%91%EC%96%91%EC%8B%9C+%ED%95%AD%EB%A7%8C2%EB%A1%9C+30&amp;output=embed" title="더원로지스 위치 지도"></iframe>
+</div>
+<div class="panel white pad">
+<h3 style="margin:0 0 10px 0; color:var(--navy);">고객문의</h3>
+<form onsubmit="event.preventDefault(); alert('문의가 접수되었습니다(데모). 실제 전송은 메일/서버 연동이 필요합니다.');">
+<div style="display:grid; gap:10px;">
+<div style="display:grid; gap:6px;">
+<label style="font-weight:900;">성함/회사명</label>
+<input required="" style="width:100%; border:1px solid var(--line); border-radius:14px; padding:12px; font:inherit;"/>
+</div>
+<div style="display:grid; gap:6px;">
+<label style="font-weight:900;">연락처</label>
+<input required="" style="width:100%; border:1px solid var(--line); border-radius:14px; padding:12px; font:inherit;"/>
+</div>
+<div style="display:grid; gap:6px;">
+<label style="font-weight:900;">문의 내용</label>
+<textarea required="" style="width:100%; min-height:130px; resize:vertical; border:1px solid var(--line); border-radius:14px; padding:12px; font:inherit;"></textarea>
+</div>
+<button class="btn primary" type="submit">문의 접수</button>
+<p class="muted" style="margin:0; font-size:13px;">※ 실제 전송은 이메일(PHP/Node) 또는 구글폼 연동으로 구현 가능합니다.</p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer>
+<div class="wrap" style="display:grid; gap:10px;">
+<div style="font-family:Montserrat; font-weight:900; font-size:16px;">THE ONE</div>
+<div style="color:rgba(255,255,255,.75);">
+<b>주식회사 더원</b> | 대표이사: 박재준 | 사업자번호: 524-87-01831
+    </div>
+<div style="display:flex; gap:14px; flex-wrap:wrap;">
+<a href="#" onclick="go('home'); return false;">HOME</a>
+<a href="#" onclick="go('company'); jumpToServices(); return false;">서비스</a>
+<a href="#" onclick="go('location'); return false;">오시는 길</a>
+</div>
+<div style="color:rgba(255,255,255,.75); font-size:13px;">© 2026 THE ONE. All rights reserved.</div>
+</div>
+</footer>
+<script>
+  const hamb = document.getElementById('hamb');
+  const drawer = document.getElementById('drawer');
+
+  hamb.addEventListener('click', () => {
+    drawer.classList.toggle('show');
+    hamb.textContent = drawer.classList.contains('show') ? '✕' : '☰';
+  });
+
+  function setActive(page){
+    document.querySelectorAll('.tab').forEach(b=>{
+      b.classList.toggle('active', b.dataset.page===page);
+    });
+  }
+
+  function jumpToGreeting(){
+    setTimeout(()=>{
+      const a = document.getElementById('greeting-anchor');
+      if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 80);
+  }
+
+  function jumpToServices(){
+    setTimeout(()=>{
+      const a = document.getElementById('services-anchor');
+      if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 80);
+  }
+
+  function goCompanyToHistory(){
+    go('company');
+    setTimeout(()=>{
+      const a = document.getElementById('history-anchor');
+      if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 140);
+  }
+
+  // navigation history (SPA back)
+  const navStack = [];
+  const scrollMemory = {};
+
+  function showBackFab(){
+  const backBtn = document.getElementById('backNav');
+  if(!backBtn) return;
+  const current = document.querySelector('.page.active')?.id?.replace('page-','') || 'home';
+  backBtn.classList.toggle('hidden', !(navStack.length > 0 && current !== 'home'));
+}
+
+  function goBack(){
+    if(navStack.length === 0) return;
+    const prev = navStack.pop();
+    go(prev, {push:false});
+    setTimeout(()=>{
+      const y = scrollMemory[prev];
+      if(typeof y === 'number') window.scrollTo({top:y, behavior:'smooth'});
+      showBackFab();
+    }, 80);
+  }
+
+  function go(page, opts={push:true}){
+    const current = document.querySelector('.page.active')?.id?.replace('page-','') || null;
+
+    // remember current scroll and push current page
+    if(current){
+      scrollMemory[current] = window.scrollY || 0;
+      if(opts.push && current !== page){
+        navStack.push(current);
+      }
+    }
+
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const el = document.getElementById('page-' + page);
+    if(el) el.classList.add('active');
+
+    setActive(page);
+
+    drawer.classList.remove('show');
+    hamb.textContent='☰';
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    showBackFab();
+  }
+
+  window.addEventListener('load', showBackFab);
+</script>
+<!-- 사용 안내:
+  1) 로고: 현재 "assets/img_007.webp" 를 사용합니다. (업로드 파일의 로고 경로 그대로)
+  2) 메인 배경: assets/img_008.webp(항만/컨테이너 이미지 넣어주세요)
+  3) 인사말 이미지: assets/img_009.webp-->
+<!-- Core Gallery Modal -->
+<div aria-hidden="true" class="core-modal-backdrop" id="coreModalBackdrop">
+<div aria-label="핵심역량 이미지 갤러리" aria-modal="true" class="core-modal" role="dialog">
+<div class="core-modal-header">
+<div class="core-modal-title">
+<b id="coreModalTitle">핵심역량</b>
+<span id="coreModalCounter">이미지 1 / 5</span>
+</div>
+<div class="core-modal-actions">
+<button aria-label="자동재생" class="core-icon-btn" id="coreAutoBtn" title="자동재생 시작/정지">▶</button>
+<button aria-label="닫기" class="core-icon-btn" id="coreCloseBtn" title="닫기">✕</button>
+</div>
+</div>
+<div class="core-stage" id="coreStage">
+<img alt="핵심역량 이미지" id="coreStageImg" loading="eager"/>
+<button aria-label="이전" class="core-nav prev" id="corePrevBtn">‹</button>
+<button aria-label="다음" class="core-nav next" id="coreNextBtn">›</button>
+<div class="core-caption">
+<div class="cap-title" id="coreCapTitle"></div>
+<div class="cap-sub" id="coreCapSub"></div>
+</div>
+</div>
+<div class="core-footer">
+<div class="core-dots" id="coreDots"></div>
+<div class="hint">클릭/좌우키로 이동 · ESC 닫기</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  const DATA = {"GC": {"title": "종합건설", "sub": "산업시설·물류센터·구조물 시공 등 종합건설 역량", "imgs": ["assets/img_010.webp", "assets/img_011.webp", "assets/img_012.webp", "assets/img_013.webp", "assets/img_014.webp"]}, "SEA": {"title": "해상·내륙 연계", "sub": "항만·내륙 운송 연계로 안정적인 물류 운영", "imgs": ["assets/img_015.webp", "assets/img_016.webp", "assets/img_017.webp", "assets/img_018.webp", "assets/img_019.webp"]}, "BND": {"title": "보세/위험물", "sub": "보세·위험물 창고 운영 기반의 안전 물류 관리", "imgs": ["assets/img_020.webp", "assets/img_021.webp", "assets/img_022.webp", "assets/img_023.webp", "assets/img_024.webp"]}, "ESS_MFG": {"title": "ESS 제조", "sub": "특수 컨테이너 제조·가공·품질관리 역량", "imgs": ["assets/img_025.webp", "assets/img_026.webp", "assets/img_027.webp", "assets/img_028.webp", "assets/img_029.webp"]}, "PLUS": {"title": "더원플러스", "sub": "평동사업장 전경", "imgs": ["assets/img_030.webp", "assets/img_031.webp", "assets/img_032.webp", "assets/img_033.webp"]}, "LOGIS": {"title": "더원로지스", "sub": "사업장 전경", "imgs": ["assets/img_034.webp", "assets/img_035.webp", "assets/img_036.webp", "assets/img_037.webp"]}, "CONS": {"title": "더원건설", "sub": "사업장 전경", "imgs": ["assets/img_038.webp"]}};
+
+  const backdrop = document.getElementById('coreModalBackdrop');
+  const titleEl = document.getElementById('coreModalTitle');
+  const counterEl = document.getElementById('coreModalCounter');
+  const imgEl = document.getElementById('coreStageImg');
+  const capTitle = document.getElementById('coreCapTitle');
+  const capSub = document.getElementById('coreCapSub');
+  const dotsWrap = document.getElementById('coreDots');
+  const closeBtn = document.getElementById('coreCloseBtn');
+  const prevBtn = document.getElementById('corePrevBtn');
+  const nextBtn = document.getElementById('coreNextBtn');
+  const autoBtn = document.getElementById('coreAutoBtn');
+  const stage = document.getElementById('coreStage');
+
+  let currentKey = null;
+  let idx = 0;
+  let timer = null;
+
+  function renderDots(n){
+    dotsWrap.innerHTML='';
+    for(let i=0;i<n;i++){ 
+      const d = document.createElement('button');
+      d.className = 'core-dot' + (i===idx ? ' active':'');
+      d.type='button';
+      d.addEventListener('click', ()=>{ idx=i; render(); });
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  function render(){
+    const item = DATA[currentKey];
+    const n = item.imgs.length;
+    idx = (idx + n) % n;
+    imgEl.style.opacity = 0;
+
+    const nextSrc = item.imgs[idx];
+    const tmp = new Image();
+    tmp.onload = ()=>{
+      imgEl.src = nextSrc;
+      imgEl.style.opacity = 1;
+    };
+    tmp.src = nextSrc;
+
+    titleEl.textContent = item.title;
+    counterEl.textContent = '이미지 ' + (idx+1) + ' / ' + n;
+    capTitle.textContent = item.title;
+    capSub.textContent = item.sub;
+
+    Array.from(dotsWrap.children).forEach((el,i)=>{
+      el.classList.toggle('active', i===idx);
+    });
+  }
+
+  function openModal(key){
+    currentKey = key;
+    idx = 0;
+    backdrop.style.display='flex';
+    backdrop.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    renderDots(DATA[key].imgs.length);
+    render();
+  }
+
+  function closeModal(){
+    stopAuto();
+    backdrop.style.display='none';
+    backdrop.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  function next(){ idx++; render(); }
+  function prev(){ idx--; render(); }
+
+  function startAuto(){
+    if(timer) return;
+    autoBtn.textContent = '❚❚';
+    timer = setInterval(next, 2600);
+  }
+  function stopAuto(){
+    if(!timer) return;
+    clearInterval(timer);
+    timer = null;
+    autoBtn.textContent = '▶';
+  }
+  function toggleAuto(){ timer ? stopAuto() : startAuto(); }
+
+  function bindByText(txt, key){
+    const cards = Array.from(document.querySelectorAll('.core-card, .service-card'));
+    cards
+      .filter(c=> (c.innerText||'').includes(txt))
+      .forEach(c=>{
+        c.style.cursor='pointer';
+        c.addEventListener('click', ()=>openModal(key));
+      });
+  }
+
+  bindByText('종합건설','GC');
+  bindByText('해상·내륙', 'SEA');
+  bindByText('보세/위험물','BND');
+  bindByText('ESS', 'ESS_MFG');
+
+
+  
+
+  // 계열사: data-modal-key가 있는 카드 클릭 시 모달 열기
+  document.querySelectorAll('[data-modal-key]').forEach((el)=>{
+    el.addEventListener('click', ()=>{
+      const k = el.getAttribute('data-modal-key');
+      if(k && DATA[k]) openModal(k);
+    });
+  });
+
+// 버튼(이미지 보기) 클릭 시 모달 열기
+  document.querySelectorAll('.core-view-btn').forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const k = btn.getAttribute('data-core-key');
+      if(k && DATA[k]) openModal(k);
+    });
+  });
+
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  autoBtn.addEventListener('click', toggleAuto);
+
+  document.addEventListener('keydown', (e)=>{
+    if(backdrop.getAttribute('aria-hidden')==='true') return;
+    if(e.key==='Escape') closeModal();
+    if(e.key==='ArrowRight') next();
+    if(e.key==='ArrowLeft') prev();
+  });
+
+  stage.addEventListener('mouseenter', ()=>{ if(timer) stopAuto(); });
+
+  imgEl.style.transition = 'opacity .28s ease';
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+</script>
+
+</body>
+</html>

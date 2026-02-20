@@ -1,0 +1,25 @@
+{
+  "name": "THE ONE",
+  "short_name": "THE ONE",
+  "description": "컨테이너제조/보세/위험물 · SCM · 건설",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d3b66",
+  "theme_color": "#0d3b66",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
