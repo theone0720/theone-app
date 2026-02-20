@@ -1,6 +1,6 @@
 {
-  "name": "THE ONE",
-  "short_name": "THE ONE",
+  "name": "더원",
+  "short_name": "더원",
   "description": "THE ONE 웹앱",
   "start_url": "./index.html",
   "scope": "./",
