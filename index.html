@@ -73,15 +73,20 @@
     .page.active{display:block}
 
     .hero{
-      min-height: 72vh;
-      border-radius: 0 0 26px 26px;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(0,68,148,.72), rgba(0,68,148,.22)),
-        url('assets/img_001.webp');
-      background-size:cover; background-position:center;
-      color:#fff; display:grid;
-    }
+  min-height:72vh;
+  border-radius:0 0 26px 26px;
+  overflow:hidden;
+
+  background:url('assets/hero1.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  color:#fff;
+  display:grid;
+
+  transition:background-image 1s ease-in-out;
+}
     .hero .wrap{padding-top:64px; padding-bottom:64px; display:grid; gap:18px; align-content:center}
     .badge{display:inline-flex; align-items:center; gap:8px; width:max-content; padding:8px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); font-weight:900}
@@ -1298,6 +1303,29 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+(function(){
+  const hero = document.querySelector('.hero');
 
+  const slides = [
+    "assets/hero1.jpg",
+    "assets/hero2.jpg",
+    "assets/hero3.jpg",
+    "assets/hero4.jpg"
+  ];
+
+  let i = 0;
+
+  // 미리 로딩
+  slides.forEach(src=>{
+    const img = new Image();
+    img.src = src;
+  });
+
+  setInterval(()=>{
+    i = (i + 1) % slides.length;
+    hero.style.backgroundImage = `url('${slides[i]}')`;
+  }, 3000); // 3초마다 변경
+})();
+</script>
 </body>
 </html>
