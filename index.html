@@ -77,7 +77,7 @@
   border-radius:0 0 26px 26px;
   overflow:hidden;
 
-  background:url('assets/hero1.jpg');
+  background:url('assets/theonelogis001.png');
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
@@ -1307,24 +1307,20 @@ if ('serviceWorker' in navigator) {
   const hero = document.querySelector('.hero');
 
   const slides = [
-    "assets/hero1.jpg",
-    "assets/hero2.jpg",
-    "assets/hero3.jpg",
-    "assets/hero4.jpg"
+    "assets/theonelogis001.png",
+    "assets/theonelogis002.png",
+    "assets/theonelogis003.jpg",
+    "assets/theonelogis004.jpg"
   ];
 
+  // 미리 로딩(깜빡임 방지)
+  slides.forEach(src => { const img = new Image(); img.src = src; });
+
   let i = 0;
-
-  // 미리 로딩
-  slides.forEach(src=>{
-    const img = new Image();
-    img.src = src;
-  });
-
-  setInterval(()=>{
+  setInterval(() => {
     i = (i + 1) % slides.length;
     hero.style.backgroundImage = `url('${slides[i]}')`;
-  }, 3000); // 3초마다 변경
+  }, 3000); // 3초마다 전환
 })();
 </script>
 </body>
