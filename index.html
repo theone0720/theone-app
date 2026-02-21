@@ -1302,10 +1302,10 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
   });
 }
-</script>
+<script>
 (function(){
   const hero = document.querySelector('.hero');
-
+  if(!hero) return;
   const slides = [
     "assets/theonelogis001.png",
     "assets/theonelogis002.png",
@@ -1313,14 +1313,19 @@ if ('serviceWorker' in navigator) {
     "assets/theonelogis004.jpg"
   ];
 
-  // 미리 로딩(깜빡임 방지)
-  slides.forEach(src => { const img = new Image(); img.src = src; });
+  // 프리로드(깜빡임 줄이기)
+  images.forEach(src => { const img = new Image(); img.src = src; });
 
   let i = 0;
+
+  // 초기 1장 세팅 (CSS에 hero1.jpg가 있어도 여기서 덮어씁니다)
+  hero.style.backgroundImage = `url('${images[i]}')`;
+
+  // ✅ 전환 간격(밀리초): 3000 = 3초
   setInterval(() => {
-    i = (i + 1) % slides.length;
-    hero.style.backgroundImage = `url('${slides[i]}')`;
-  }, 3000); // 3초마다 전환
+    i = (i + 1) % images.length;
+    hero.style.backgroundImage = `url('${images[i]}')`;
+  }, 3000);
 })();
 </script>
 </body>
