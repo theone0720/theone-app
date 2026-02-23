@@ -464,17 +464,20 @@ img{ max-width:100%; height:auto; display:block; }
 @media (max-width:768px){
   .site-logo{
     max-height:52px;
+  }
 
-    /* Mobile hero: avoid vertical centering that can cause top text clipping */
-    .hero{ min-height: auto; }
-    .hero .wrap{
-      padding-top: 24px !important;
-      padding-bottom: 36px !important;
-      align-content: start !important;
-    }
-    .badge{ max-width: 100%; overflow:hidden; text-overflow:ellipsis; }
-
-}
+  /* Mobile hero: avoid vertical centering that can cause top text clipping */
+  .hero{ min-height:auto; }
+  .hero .wrap{
+    padding-top:24px !important;
+    padding-bottom:36px !important;
+    align-content:start !important;
+  }
+  .badge{
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 }
 
 
