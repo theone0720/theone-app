@@ -1,73 +1,27 @@
-const CACHE_NAME = "theone-split-20260220091518";
-const ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./sw.js",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/apple-touch-icon.png",
-  "./assets/img_001.webp",
-  "./assets/img_002.webp",
-  "./assets/img_003.webp",
-  "./assets/img_004.webp",
-  "./assets/img_005.webp",
-  "./assets/img_006.webp",
-  "./assets/img_007.webp",
-  "./assets/img_008.webp",
-  "./assets/img_009.webp",
-  "./assets/img_010.webp",
-  "./assets/img_011.webp",
-  "./assets/img_012.webp",
-  "./assets/img_013.webp",
-  "./assets/img_014.webp",
-  "./assets/img_015.webp",
-  "./assets/img_016.webp",
-  "./assets/img_017.webp",
-  "./assets/img_018.webp",
-  "./assets/img_019.webp",
-  "./assets/img_020.webp",
-  "./assets/img_021.webp",
-  "./assets/img_022.webp",
-  "./assets/img_023.webp",
-  "./assets/img_024.webp",
-  "./assets/img_025.webp",
-  "./assets/img_026.webp",
-  "./assets/img_027.webp",
-  "./assets/img_028.webp",
-  "./assets/img_029.webp",
-  "./assets/img_030.webp",
-  "./assets/img_031.webp",
-  "./assets/img_032.webp",
-  "./assets/img_033.webp",
-  "./assets/img_034.webp",
-  "./assets/img_035.webp",
-  "./assets/img_036.webp",
-  "./assets/img_037.webp",
-  "./assets/img_038.webp"
-];
+// sw.js (Kill Switch / Self-destruct Service Worker)
+// 목적: 기존 캐시 전부 삭제 + SW 자동 해제 + 페이지 자동 새로고침
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
-    )
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    // 1) 모든 캐시 삭제
+    const keys = await caches.keys();
+    await Promise.all(keys.map((k) => caches.delete(k)));
+
+    // 2) 서비스워커 등록 해제
+    try {
+      await self.registration.unregister();
+    } catch (e) {}
+
+    // 3) 열려있는 페이지들 강제 새로고침(최신 index/html 받게)
+    const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    clients.forEach((c) => {
+      try { c.navigate(c.url); } catch (e) {}
+    });
+  })());
 });
 
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-  event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-      return res;
-    }).catch(() => cached))
-  );
-});
+// fetch 핸들러를 두지 않음 = 더 이상 캐시/가로채기 안 함
