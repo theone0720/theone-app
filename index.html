@@ -1166,7 +1166,7 @@ header.scrolled .site-logo{
 
   let __scrollRAF = null;
 
-function smoothScrollTo(targetY, pxPerSec = 10){ // 숫자 작을수록 더 느림(추천 6~12)
+function smoothScrollTo(targetY, pxPerSec = 6){ // 숫자 작을수록 더 느림(추천 6~12)
   if(__scrollRAF) cancelAnimationFrame(__scrollRAF);
 
   const startY = window.scrollY || 0;
@@ -1212,7 +1212,7 @@ function goCompanySlowToHistory(){
     const targetY = (window.scrollY || 0) + rect.top - headerH;
 
     // ↓↓↓ 이 숫자를 키우면 더 느려집니다 ↓↓↓
-    smoothScrollTo(targetY, 5); // 8px/s (아주 느림)
+    smoothScrollTo(targetY, 5); // 5px/s (아주 느림)
   }, 1500); // 상단 보여주는 시간
 }
     
