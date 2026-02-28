@@ -1165,9 +1165,20 @@ header.scrolled .site-logo{
   }
 
   let __scrollRAF = null;
+let __scrollCancel = null;
+
+function cancelAutoScroll(){
+  if(__scrollRAF) cancelAnimationFrame(__scrollRAF);
+  __scrollRAF = null;
+
+  if(__scrollCancel){
+    __scrollCancel(); // 이벤트 리스너 해제
+    __scrollCancel = null;
+  }
+}
 
 function smoothScrollTo(targetY, pxPerSec = 10){ // 숫자 작을수록 더 느림(추천 6~12)
-  if(__scrollRAF) cancelAnimationFrame(__scrollRAF);
+  cancelAutoScroll(); // 기존 자동스크롤이 있으면 먼저 취소
 
   const startY = window.scrollY || 0;
   const diff = targetY - startY;
@@ -1175,6 +1186,24 @@ function smoothScrollTo(targetY, pxPerSec = 10){ // 숫자 작을수록 더 느�
 
   const duration = Math.max(1000, (distance / pxPerSec) * 1000);
   const start = performance.now();
+
+  // ✅ 사용자가 터치/휠 등 조작하면 자동 스크롤 즉시 중단
+  const cancelOnUser = () => cancelAutoScroll();
+  const opts = { passive: true };
+
+  window.addEventListener('touchstart', cancelOnUser, opts);
+  window.addEventListener('touchmove', cancelOnUser, opts);
+  window.addEventListener('wheel', cancelOnUser, opts);
+  window.addEventListener('pointerdown', cancelOnUser, opts);
+  window.addEventListener('keydown', cancelOnUser, opts);
+
+  __scrollCancel = () => {
+    window.removeEventListener('touchstart', cancelOnUser, opts);
+    window.removeEventListener('touchmove', cancelOnUser, opts);
+    window.removeEventListener('wheel', cancelOnUser, opts);
+    window.removeEventListener('pointerdown', cancelOnUser, opts);
+    window.removeEventListener('keydown', cancelOnUser, opts);
+  };
 
   function step(now){
     const t = Math.min(1, (now - start) / duration);
@@ -1184,7 +1213,7 @@ function smoothScrollTo(targetY, pxPerSec = 10){ // 숫자 작을수록 더 느�
     if(t < 1){
       __scrollRAF = requestAnimationFrame(step);
     }else{
-      __scrollRAF = null;
+      cancelAutoScroll(); // 끝나면 정리
     }
   }
 
@@ -1239,6 +1268,7 @@ function goCompanySlowToHistory(){
   }
 
   function go(page, opts={push:true}){
+    cancelAutoScroll(); // ✅ 추가: 페이지 이동 시 자동스크롤 강제 중단  
     const current = document.querySelector('.page.active')?.id?.replace('page-','') || null;
 
     // remember current scroll and push current page
