@@ -1164,7 +1164,7 @@ header.scrolled .site-logo{
     }, 140);
   }
 
-  function smoothScrollTo(targetY, duration = 4000){
+  function smoothScrollTo(targetY, duration = 20000){
   const startY = window.scrollY || 0;
   const diff = targetY - startY;
   const start = performance.now();
@@ -1204,7 +1204,7 @@ function goCompanySlowToHistory(){
     const targetY = (window.scrollY || 0) + rect.top - headerH;
 
     // ↓↓↓ 이 숫자를 키우면 더 느려집니다 ↓↓↓
-    smoothScrollTo(targetY, 5000);  // 5000 = 5초
+    smoothScrollTo(targetY, 20000); // 20000 = 20초
   }, 1500); // 상단 보여주는 시간
 }
     
