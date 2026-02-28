@@ -1165,25 +1165,27 @@ header.scrolled .site-logo{
   }
 
   function goCompanySlowToHistory(){
-
-  // 1️⃣ 회사소개 페이지로 이동 (상단부터 보여줌)
+  // 회사소개로 이동
   go('company');
 
-  // 2️⃣ 상단을 확실히 먼저 고정
-  setTimeout(()=>{
+  // 1) 페이지 전환이 실제로 반영된 뒤 상단 고정
+  setTimeout(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, 50);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, 60);
 
-  // 3️⃣ 1초 후 연혁으로 부드럽게 내려감
-  setTimeout(()=>{
+  // 2) 그 다음 프레임에서 연혁으로 부드럽게 이동 (모바일 안정화)
+  setTimeout(() => {
     const a = document.getElementById('history-anchor');
-    if(a){
-      a.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+    if(!a) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        a.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-    }
-  }, 1000); // ← 1500~2000으로 늘리면 더 천천히 느낌
+    });
+  }, 1200); // 상단 보여주는 시간(원하시면 1500~2000)
 }
     
   // navigation history (SPA back)
