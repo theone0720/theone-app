@@ -1166,7 +1166,7 @@ header.scrolled .site-logo{
 
   let __scrollRAF = null;
 
-function smoothScrollTo(targetY, pxPerSec = 12){ // 숫자 작을수록 더 느림(추천 6~12)
+function smoothScrollTo(targetY, pxPerSec = 15){ // 숫자 작을수록 더 느림(추천 6~12)
   if(__scrollRAF) cancelAnimationFrame(__scrollRAF);
 
   const startY = window.scrollY || 0;
