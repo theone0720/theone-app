@@ -1164,28 +1164,48 @@ header.scrolled .site-logo{
     }, 140);
   }
 
-  function goCompanySlowToHistory(){
+  function smoothScrollTo(targetY, duration = 4000){
+  const startY = window.scrollY || 0;
+  const diff = targetY - startY;
+  const start = performance.now();
+
+  const ease = (t) => (t < 0.5)
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function step(now){
+    const t = Math.min(1, (now - start) / duration);
+    const y = startY + diff * ease(t);
+    window.scrollTo(0, y);
+    if(t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function goCompanySlowToHistory(){
+
   // 회사소개로 이동
   go('company');
 
-  // 1) 페이지 전환이 실제로 반영된 뒤 상단 고정
+  // 상단 먼저 고정
   setTimeout(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }, 60);
 
-  // 2) 그 다음 프레임에서 연혁으로 부드럽게 이동 (모바일 안정화)
+  // 상단을 잠시 보여준 후 아주 천천히 내려가기
   setTimeout(() => {
     const a = document.getElementById('history-anchor');
     if(!a) return;
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        a.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  }, 1200); // 상단 보여주는 시간(원하시면 1500~2000)
+    const headerH = document.querySelector('header')?.offsetHeight || 0;
+    const rect = a.getBoundingClientRect();
+    const targetY = (window.scrollY || 0) + rect.top - headerH;
+
+    // ↓↓↓ 이 숫자를 키우면 더 느려집니다 ↓↓↓
+    smoothScrollTo(targetY, 5000);  // 5000 = 5초
+  }, 1500); // 상단 보여주는 시간
 }
     
   // navigation history (SPA back)
