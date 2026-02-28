@@ -1133,7 +1133,7 @@ header.scrolled .site-logo{
 
   hamb.addEventListener('click', () => {
     drawer.classList.toggle('show');
-    hamb.textContent = drawer.classList.contains('show') ? '✕' : '☰';
+    hamb.textContent = drawer.classList.contains('show') ? 'CLOSE' : 'MENU';
   });
 
   function setActive(page){
@@ -1256,7 +1256,7 @@ function goCompanySlowToHistory(){
     setActive(page);
 
     drawer.classList.remove('show');
-    hamb.textContent='☰';
+    hamb.textContent='MENU';
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
     showBackFab();
