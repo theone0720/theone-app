@@ -1151,8 +1151,8 @@
   ========================= */
   const AUTO_SCROLL = {
     enabled: true,
-    pxPerSec: 25,            // ✅ 속도: 숫자 작을수록 느림 (추천 10~22)
-    bottomPauseMs: 60,      // 바닥에서 다음 페이지로 넘어가기 전 잠깐 멈춤
+    pxPerSec: 14,            // ✅ 속도: 숫자 작을수록 느림 (추천 10~22)
+    bottomPauseMs: 30,      // 바닥에서 다음 페이지로 넘어가기 전 잠깐 멈춤
     resumeAfterUserMs: 3500, // 사용자 조작 후 자동재개 시간
     pageOrder: ['home','company','affiliates','location']
   };
@@ -1256,7 +1256,7 @@
         __autoPauseTimer = setTimeout(()=>{
           stopGlobalAutoScroll();
           nextPage();
-          setTimeout(()=>{ __autoPaused = false; startGlobalAutoScroll(); }, 60);
+          setTimeout(()=>{ __autoPaused = false; startGlobalAutoScroll(); }, 30);
         }, AUTO_SCROLL.bottomPauseMs);
 
         __autoRAF = requestAnimationFrame(tick);
