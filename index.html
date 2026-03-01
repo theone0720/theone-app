@@ -1214,57 +1214,65 @@
   }
 
   function startGlobalAutoScroll(){
-    if(!AUTO_SCROLL.enabled) return;
-    if(__autoRAF) return;
+  if(!AUTO_SCROLL.enabled) return;
+  if(__autoRAF) return;
 
-    refreshMaxScroll();
+  refreshMaxScroll();
 
-    __autoLastT = 0;
-    document.body.classList.add('auto-scrolling');
-
-    const se = document.scrollingElement || document.documentElement;
-
-    const tick = (t)=>{
-      if(!AUTO_SCROLL.enabled){
-        stopGlobalAutoScroll();
-        return;
-      }
-
-      if(window.__modalOpen || document.hidden){
-        pauseGlobalAutoScroll();
-        __autoRAF = requestAnimationFrame(tick);
-        return;
-      }
-
-      if(__autoPaused){
-        __autoRAF = requestAnimationFrame(tick);
-        return;
-      }
-
-      if(__autoLastT === 0) __autoLastT = t;
-
-      // ✅ dt 캡으로 프레임 드랍 시 튐 방지(최대 50ms)
-      const dt = Math.min(0.05, (t - __autoLastT) / 1000);
-      __autoLastT = t;
-
-      const step = AUTO_SCROLL.pxPerSec * dt;
-      const y = se.scrollTop;
-
-      if (y >= __maxScrollCache - 2) {
-  // ✅ 지연 없이 즉시 다음 페이지로 이동
-  stopGlobalAutoScroll();   // RAF 확실히 정리
-  __autoPaused = false;
   __autoLastT = 0;
-  nextPage();               // go(next) 호출
-  return;
-}
+  __autoFpsLast = 0;   // ✅ 30fps 기준 초기화
+  document.body.classList.add('auto-scrolling');
 
-      se.scrollTop = y + step;
+  const se = document.scrollingElement || document.documentElement;
+
+  const tick = (t)=>{
+
+    if(!AUTO_SCROLL.enabled){
+      stopGlobalAutoScroll();
+      return;
+    }
+
+    if(window.__modalOpen || document.hidden){
       __autoRAF = requestAnimationFrame(tick);
-    };
+      return;
+    }
+
+    if(__autoPaused){
+      __autoRAF = requestAnimationFrame(tick);
+      return;
+    }
+
+    // ✅ 30fps 제한
+    if (!__autoFpsLast) __autoFpsLast = t;
+    if ((t - __autoFpsLast) < 33) {
+      __autoRAF = requestAnimationFrame(tick);
+      return;
+    }
+    __autoFpsLast = t;
+
+    // ✅ dt 계산 (프레임 드랍 튐 방지)
+    if (__autoLastT === 0) __autoLastT = t;
+    const dt = Math.min(0.033, (t - __autoLastT) / 1000);
+    __autoLastT = t;
+
+    const step = AUTO_SCROLL.pxPerSec * dt;
+    const y = se.scrollTop;
+
+    // ✅ 바닥 도달 시 즉시 다음 페이지 이동
+    if (y >= __maxScrollCache - 2) {
+      stopGlobalAutoScroll();
+      __autoPaused = false;
+      nextPage();
+      return;
+    }
+
+    se.scrollTop = y + step;
 
     __autoRAF = requestAnimationFrame(tick);
-  }
+  };
+
+  __autoRAF = requestAnimationFrame(tick);
+}
 
   // ✅ 사용자 조작 시 잠깐 멈췄다가 자동 재개
   function onUserIntent(){
