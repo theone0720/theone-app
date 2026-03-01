@@ -545,6 +545,22 @@
     width: min(96vw, 980px) !important;
     max-width: 96vw !important;
   }
+
+  /* ✅ PC 끊김 줄이기: 자동스크롤 중 무거운 효과 완화 */
+  body.auto-scrolling header{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  body.auto-scrolling .stat,
+  body.auto-scrolling .card,
+  body.auto-scrolling .panel{
+    box-shadow:none !important;
+  }
+  body.auto-scrolling .stat:hover,
+  body.auto-scrolling .card:hover,
+  body.auto-scrolling .panel:hover{
+    transform:none !important;
+  }
 </style>
 
 <style>
@@ -1049,7 +1065,7 @@
     }, 140);
   }
 
-  /* ====== (기존) 회사소개 천천히 내려가는 기능(유지) ====== */
+  /* ====== 회사소개 천천히 내려가는 기능(유지) ====== */
   let __scrollRAF = null;
   let __scrollCancel = null;
 
@@ -1058,13 +1074,13 @@
     __scrollRAF = null;
 
     if(__scrollCancel){
-      __scrollCancel(); // 이벤트 리스너 해제
+      __scrollCancel();
       __scrollCancel = null;
     }
   }
 
-  function smoothScrollTo(targetY, pxPerSec = 10){ // 숫자 작을수록 더 느림(추천 6~12)
-    cancelAutoScroll(); // 기존 자동스크롤이 있으면 먼저 취소
+  function smoothScrollTo(targetY, pxPerSec = 10){
+    cancelAutoScroll();
 
     const startY = window.scrollY || 0;
     const diff = targetY - startY;
@@ -1073,7 +1089,6 @@
     const duration = Math.max(1000, (distance / pxPerSec) * 1000);
     const start = performance.now();
 
-    // 사용자가 터치/휠 등 조작하면 자동 스크롤 즉시 중단
     const cancelOnUser = () => cancelAutoScroll();
     const opts = { passive: true };
 
@@ -1093,13 +1108,13 @@
 
     function step(now){
       const t = Math.min(1, (now - start) / duration);
-      const y = startY + diff * t; // 선형(가속 없음)
+      const y = startY + diff * t;
       window.scrollTo(0, y);
 
       if(t < 1){
         __scrollRAF = requestAnimationFrame(step);
       }else{
-        cancelAutoScroll(); // 끝나면 정리
+        cancelAutoScroll();
       }
     }
 
@@ -1123,34 +1138,73 @@
       const rect = a.getBoundingClientRect();
       const targetY = (window.scrollY || 0) + rect.top - headerH;
 
-      smoothScrollTo(targetY, 30); // 30px/s
+      smoothScrollTo(targetY, 30);
     }, 1500);
   }
 
   /* =========================
-     Global Auto-Scroll Engine
-     Mode: Next page on bottom
-     (1번 적용: location 끝나면 home으로 반복)
+     Global Auto-Scroll Engine (PC 끊김 개선 버전)
+     - maxScroll 캐싱
+     - 모달 상태 플래그(window.__modalOpen)
+     - 자동스크롤 중 무거운 효과 줄이기(body.auto-scrolling)
+     - 속도 조절 함수 제공(window.setAutoScrollSpeed)
   ========================= */
   const AUTO_SCROLL = {
     enabled: true,
-    pxPerSec: 18, // ✅ 속도(공통): 숫자 작을수록 느림 (10~25 추천)
+    pxPerSec: 14,            // ✅ 속도: 숫자 작을수록 느림 (추천 10~22)
+    bottomPauseMs: 350,      // 바닥에서 다음 페이지로 넘어가기 전 잠깐 멈춤
+    resumeAfterUserMs: 3500, // 사용자 조작 후 자동재개 시간
     pageOrder: ['home','company','affiliates','location']
   };
 
+  // ✅ 모달 열림 상태(모달 open/close에서 true/false)
+  window.__modalOpen = false;
+
   let __autoRAF = null;
-  let __autoLast = 0;
+  let __autoLastT = 0;
+  let __autoPaused = false;
+  let __autoPauseTimer = null;
+  let __autoUserTimer = null;
+  let __maxScrollCache = 0;
+
+  function refreshMaxScroll(){
+    const se = document.scrollingElement || document.documentElement;
+    __maxScrollCache = Math.max(0, se.scrollHeight - window.innerHeight);
+  }
+  window.addEventListener('resize', refreshMaxScroll, {passive:true});
+  window.addEventListener('load', refreshMaxScroll);
+  setTimeout(refreshMaxScroll, 800);
 
   function stopGlobalAutoScroll(){
     if(__autoRAF) cancelAnimationFrame(__autoRAF);
     __autoRAF = null;
-    __autoLast = 0;
+    __autoLastT = 0;
+    document.body.classList.remove('auto-scrolling');
+  }
+  function pauseGlobalAutoScroll(){
+    __autoPaused = true;
+    document.body.classList.remove('auto-scrolling');
+  }
+  function resumeGlobalAutoScroll(){
+    __autoPaused = false;
+    if(!__autoRAF) startGlobalAutoScroll();
+    else document.body.classList.add('auto-scrolling');
   }
 
-  function isModalOpen(){
-    const b = document.getElementById('coreModalBackdrop');
-    return !!b && getComputedStyle(b).display !== 'none';
+  // ✅ 콘솔/코드에서 속도 조절
+  function setAutoScrollSpeed(pxPerSec){
+    const v = Number(pxPerSec);
+    if(!Number.isFinite(v)) return;
+    AUTO_SCROLL.pxPerSec = Math.max(3, Math.min(60, v)); // 3~60 제한
   }
+  function enableAutoScroll(on){
+    AUTO_SCROLL.enabled = !!on;
+    if(!AUTO_SCROLL.enabled) stopGlobalAutoScroll();
+    else startGlobalAutoScroll();
+  }
+  // 외부에서 쓰기 쉽게 공개
+  window.setAutoScrollSpeed = setAutoScrollSpeed;
+  window.enableAutoScroll = enableAutoScroll;
 
   function nextPage(){
     const current = document.querySelector('.page.active')?.id?.replace('page-','') || 'home';
@@ -1163,32 +1217,83 @@
     if(!AUTO_SCROLL.enabled) return;
     if(__autoRAF) return;
 
-    __autoLast = performance.now();
+    refreshMaxScroll();
 
-    function tick(now){
-      if(!AUTO_SCROLL.enabled){ stopGlobalAutoScroll(); return; }
-      if(isModalOpen()){ stopGlobalAutoScroll(); return; }
+    __autoLastT = 0;
+    document.body.classList.add('auto-scrolling');
 
-      const dt = (now - __autoLast) / 1000;
-      __autoLast = now;
+    const se = document.scrollingElement || document.documentElement;
 
-      const step = AUTO_SCROLL.pxPerSec * dt;
-      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      const y = window.scrollY || 0;
-
-      if(y >= maxScroll - 1){
+    const tick = (t)=>{
+      if(!AUTO_SCROLL.enabled){
         stopGlobalAutoScroll();
-        nextPage();
-        setTimeout(startGlobalAutoScroll, 180);
         return;
       }
 
-      window.scrollTo(0, y + step);
+      if(window.__modalOpen || document.hidden){
+        pauseGlobalAutoScroll();
+        __autoRAF = requestAnimationFrame(tick);
+        return;
+      }
+
+      if(__autoPaused){
+        __autoRAF = requestAnimationFrame(tick);
+        return;
+      }
+
+      if(__autoLastT === 0) __autoLastT = t;
+
+      // ✅ dt 캡으로 프레임 드랍 시 튐 방지(최대 50ms)
+      const dt = Math.min(0.05, (t - __autoLastT) / 1000);
+      __autoLastT = t;
+
+      const step = AUTO_SCROLL.pxPerSec * dt;
+      const y = se.scrollTop;
+
+      if(y >= __maxScrollCache - 2){
+        pauseGlobalAutoScroll();
+        clearTimeout(__autoPauseTimer);
+        __autoPauseTimer = setTimeout(()=>{
+          stopGlobalAutoScroll();
+          nextPage();
+          setTimeout(()=>{ __autoPaused = false; startGlobalAutoScroll(); }, 220);
+        }, AUTO_SCROLL.bottomPauseMs);
+
+        __autoRAF = requestAnimationFrame(tick);
+        return;
+      }
+
+      se.scrollTop = y + step;
       __autoRAF = requestAnimationFrame(tick);
-    }
+    };
 
     __autoRAF = requestAnimationFrame(tick);
   }
+
+  // ✅ 사용자 조작 시 잠깐 멈췄다가 자동 재개
+  function onUserIntent(){
+    if(!AUTO_SCROLL.enabled) return;
+    pauseGlobalAutoScroll();
+    clearTimeout(__autoUserTimer);
+    __autoUserTimer = setTimeout(()=>{
+      if(!window.__modalOpen && !document.hidden){
+        resumeGlobalAutoScroll();
+      }
+    }, AUTO_SCROLL.resumeAfterUserMs);
+  }
+  ['wheel','touchstart','touchmove','pointerdown','mousedown','keydown'].forEach(ev=>{
+    window.addEventListener(ev, onUserIntent, {passive:true});
+  });
+
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){
+      pauseGlobalAutoScroll();
+    }else{
+      __autoLastT = 0;
+      refreshMaxScroll();
+      resumeGlobalAutoScroll();
+    }
+  });
 
   // navigation history (SPA back)
   const navStack = [];
@@ -1213,7 +1318,7 @@
   }
 
   function go(page, opts={push:true}){
-    // ✅ 페이지 이동 시 (회사소개 느린 스크롤 + 전역 자동스크롤) 모두 중단
+    // ✅ 페이지 이동 시 자동스크롤들 모두 중단
     cancelAutoScroll();
     stopGlobalAutoScroll();
 
@@ -1238,12 +1343,17 @@
 
     showBackFab();
 
-    // ✅ 전역 자동스크롤 재시작(모든 환경 동일)
-    setTimeout(startGlobalAutoScroll, 180);
+    // ✅ 새 페이지에서 높이 갱신 후 자동스크롤 시작
+    setTimeout(()=>{
+      refreshMaxScroll();
+      __autoPaused = false;
+      startGlobalAutoScroll();
+    }, 220);
   }
 
   window.addEventListener('load', ()=>{
     showBackFab();
+    refreshMaxScroll();
     startGlobalAutoScroll();
   });
 </script>
@@ -1346,18 +1456,27 @@
   function openModal(key){
     currentKey = key;
     idx = 0;
+
+    // ✅ 전역 자동스크롤 일시정지 플래그
+    window.__modalOpen = true;
+
     backdrop.style.display='flex';
     backdrop.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
+
     renderDots(DATA[key].imgs.length);
     render();
   }
 
   function closeModal(){
     stopAuto();
+
     backdrop.style.display='none';
     backdrop.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
+
+    // ✅ 전역 자동스크롤 재개 플래그
+    window.__modalOpen = false;
   }
 
   function next(){ idx++; render(); }
@@ -1376,7 +1495,6 @@
   }
   function toggleAuto(){ timer ? stopAuto() : startAuto(); }
 
-  // 계열사 카드 클릭 시 모달
   document.querySelectorAll('[data-modal-key]').forEach((el)=>{
     el.addEventListener('click', ()=>{
       const k = el.getAttribute('data-modal-key');
@@ -1384,7 +1502,6 @@
     });
   });
 
-  // 버튼(이미지 보기) 클릭 시 모달
   document.querySelectorAll('.core-view-btn').forEach((btn)=>{
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
