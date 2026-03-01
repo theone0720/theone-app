@@ -600,7 +600,7 @@
     </nav>
   </div>
 
-  <button aria-label="메뉴" class="hamb" id="hamb">☰</button>
+  <button aria-label="메뉴" class="hamb" id="hamb">MENU</button>
   <div class="drawer" id="drawer">
     <button onclick="go('home')">HOME</button>
     <button onclick="goCompanySlowToHistory()">회사소개</button>
@@ -1250,18 +1250,14 @@
       const step = AUTO_SCROLL.pxPerSec * dt;
       const y = se.scrollTop;
 
-      if(y >= __maxScrollCache - 2){
-        pauseGlobalAutoScroll();
-        clearTimeout(__autoPauseTimer);
-        __autoPauseTimer = setTimeout(()=>{
-          stopGlobalAutoScroll();
-          nextPage();
-          setTimeout(()=>{ __autoPaused = false; startGlobalAutoScroll(); }, 10);
-        }, AUTO_SCROLL.bottomPauseMs);
-
-        __autoRAF = requestAnimationFrame(tick);
-        return;
-      }
+      if (y >= __maxScrollCache - 2) {
+  // ✅ 지연 없이 즉시 다음 페이지로 이동
+  stopGlobalAutoScroll();   // RAF 확실히 정리
+  __autoPaused = false;
+  __autoLastT = 0;
+  nextPage();               // go(next) 호출
+  return;
+}
 
       se.scrollTop = y + step;
       __autoRAF = requestAnimationFrame(tick);
@@ -1344,11 +1340,19 @@
     showBackFab();
 
     // ✅ 새 페이지에서 높이 갱신 후 자동스크롤 시작
-    setTimeout(()=>{
-      refreshMaxScroll();
-      __autoPaused = false;
-      startGlobalAutoScroll();
-    }, 220);
+    setTimeout(() => {
+  // ✅ 페이지 전환 후 자동스크롤을 항상 새로 시작
+  stopGlobalAutoScroll();     // 혹시 남아있을 수 있는 RAF 정리
+  __autoPaused = false;
+  __autoLastT = 0;
+
+  refreshMaxScroll();
+  startGlobalAutoScroll();
+
+  // ✅ 이미지/폰트 로딩으로 높이가 바뀌는 경우 대비(재계산)
+  setTimeout(refreshMaxScroll, 300);
+  setTimeout(refreshMaxScroll, 900);
+}, 120);
   }
 
   window.addEventListener('load', ()=>{
